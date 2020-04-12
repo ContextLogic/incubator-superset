@@ -198,9 +198,9 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
             logger.debug(" user_data: %s", me)
 
             if SUPERSET_ENV == 'development':
-                prefix = 'axs_superset_dev_'
+                prefix = 'axs_superset-dev_'
             elif SUPERSET_ENV == 'production':
-                prefix = 'axs_superset_prod_'
+                prefix = 'axs_superset-prod_'
 
             groups = [
                 ROLES_MAPPING[x.replace(prefix, '').strip()] for x in me['groups']
