@@ -44,6 +44,8 @@ def read_vault():
     secrets = json.loads(secret_string)
     return secrets
 
+SUPERSET_ENV = get_env_variable('SUPERSET_ENV') # development/production
+
 # Read vault secrets into constant
 VAULT_SECRETS = read_vault()
 
@@ -151,6 +153,13 @@ AUTH_TYPE = AUTH_OAUTH
 AUTH_USER_REGISTRATION = True  # allow self-registration (login creates a user)
 AUTH_USER_REGISTRATION_ROLE = "Gamma"  # default is a Gamma user
 
+# Roles Mapping Okta with superset roles
+ROLES_MAPPING = {
+    'admin' : 'admin',
+    'developer' : 'alpha',
+    'viewer' : 'sql_lab'
+}
+
 # OKTA_BASE_URL must be
 #    https://{yourOktaDomain}/oauth2/v1/ (okta authorization server)
 # Cannot be
@@ -187,9 +196,14 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
                 return
             me = res.data
             logger.debug(" user_data: %s", me)
-            prefix = 'Superset'
+
+            if SUPERSET_ENV == 'development':
+                prefix = 'axs_superset_dev_'
+            elif SUPERSET_ENV == 'production':
+                prefix = 'axs_superset_prod_'
+
             groups = [
-                x.replace(prefix, '').strip() for x in me['groups']
+                ROLES_MAPPING[x.replace(prefix, '').strip()] for x in me['groups']
                 if x.startswith(prefix)
             ]
             return {
@@ -198,8 +212,7 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
                 'email' : me['email'],
                 'first_name': me['given_name'],
                 'last_name': me['family_name'],
-                # 'roles': groups, # TO-DO : Refactor AD groups and map to right role
-                'roles' : ['Admin']
+                'roles' : groups,
             }
 
     def auth_user_oauth(self, userinfo):
