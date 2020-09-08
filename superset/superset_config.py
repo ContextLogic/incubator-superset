@@ -18,6 +18,7 @@ import os
 import json
 from celery.schedules import crontab
 import logging
+import time
 from flask_appbuilder.security.manager import AUTH_OAUTH
 
 logging.getLogger('requests').setLevel(logging.CRITICAL)
@@ -142,7 +143,7 @@ def QUERY_LOGGER(
         )
 
     date_str = str(datetime.now().date()).replace('-', '_')
-    filepath = "/data/query_logs_{}.csv".format(date_str)
+    filepath = "/tmp/query_logs_{}.csv".format(date_str)
     with open(filepath, "a") as ql:
         ql.write(csv_row)
 
