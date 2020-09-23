@@ -111,7 +111,7 @@ CACHE_CONFIG = {
 from werkzeug.contrib.cache import RedisCache
 RESULTS_BACKEND = RedisCache(host='localhost', port=6379, key_prefix='superset_results')
 
-# To allow Tahoe-Presto 
+# To allow Tahoe-Presto
 RESULTS_BACKEND_USE_MSGPACK = False
 
 # To add suffix of impersonated user
@@ -157,8 +157,9 @@ AUTH_USER_REGISTRATION_ROLE = "Gamma"  # default is a Gamma user
 # Roles Mapping Okta with superset roles
 ROLES_MAPPING = {
     'admin' : 'admin',
-    'developer' : 'alpha',
-    'viewer' : 'sql_lab'
+    'explorer' : 'alpha',
+    'viewer' : 'gamma',
+    'sql_lab' : 'sql_lab'
 }
 
 # OKTA_BASE_URL must be
