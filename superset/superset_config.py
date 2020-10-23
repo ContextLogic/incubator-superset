@@ -66,7 +66,7 @@ OKTA_BASE_URL = VAULT_SECRETS['OKTA_BASE_URL']
 SUPERSET_WEBSERVER_TIMEOUT = 600
 
 # The SQLAlchemy connection string.
-SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@%s:%s/%s' % (MYSQL_USER,
+SQLALCHEMY_DATABASE_URI = 'mysql+mysqlclient://%s:%s@%s:%s/%s' % (MYSQL_USER,
                                                            MYSQL_PASSWORD,
                                                            MYSQL_HOST,
                                                            MYSQL_PORT,

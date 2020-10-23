@@ -10,6 +10,7 @@ amqp==2.6.0               # via kombu
 apispec[yaml]==3.3.1      # via flask-appbuilder
 async-timeout==3.0.1      # via aiohttp
 attrs==19.3.0             # via aiohttp, jsonschema
+authlib==0.14.3
 babel==2.8.0              # via flask-babel
 backoff==1.10.0           # via apache-superset (setup.py)
 billiard==3.6.3.0         # via celery
@@ -62,6 +63,9 @@ marshmallow-sqlalchemy==0.23.0  # via flask-appbuilder
 marshmallow==3.6.1        # via flask-appbuilder, marshmallow-enum, marshmallow-sqlalchemy
 msgpack==1.0.0            # via apache-superset (setup.py)
 multidict==4.7.6          # via aiohttp, yarl
+mysqlclient==1.4.2.post1
+tableschema==1.20.0
+thrift==0.11.0
 numpy==1.18.4             # via pandas, pyarrow
 packaging==20.3           # via bleach
 pandas==1.0.3             # via apache-superset (setup.py)

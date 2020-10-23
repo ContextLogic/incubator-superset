@@ -109,6 +109,7 @@ EXPOSE ${SUPERSET_PORT}
 
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
+USER superset
 ######################################################################
 # Dev image...
 ######################################################################
@@ -124,4 +125,9 @@ RUN cd /app \
     && pip install --ignore-installed -r requirements-dev.txt \
     && pip install --ignore-installed -r requirements-extra.txt \
     && pip install --ignore-installed -r requirements-local.txt || true
-USER superset
+#USER superset
+
+RUN apt-get update && apt-get install -y libsasl2-modules libsasl2-dev
+RUN pip install -e git://github.com/vinaybabunaidu/PyHive.git@0dbbfce255279995579e186d586084283801298b#egg=PyHive[hive,presto]
+RUN apt-get update && apt-get install -y  mariadb-client && rm -rf /var/lib/apt
+RUN pip install mysqlclient Flask-OAuthlib gevent sasl==0.2.1 thrift==0.10.0 thrift-sasl==0.3.0
